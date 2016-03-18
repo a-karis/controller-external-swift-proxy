@@ -1,0 +1,29 @@
+resource_registry:
+  OS::TripleO::BlockStorage::Net::SoftwareConfig: /home/stack/templates/nic-configs/cinder-storage.yaml
+  OS::TripleO::Compute::Net::SoftwareConfig: /home/stack/templates/nic-configs/compute.yaml
+  OS::TripleO::Controller::Net::SoftwareConfig: /home/stack/templates/nic-configs/controller.yaml
+  OS::TripleO::ObjectStorage::Net::SoftwareConfig: /home/stack/templates/nic-configs/swift-storage.yaml
+  OS::TripleO::CephStorage::Net::SoftwareConfig: /home/stack/templates/nic-configs/ceph-storage.yaml
+
+parameter_defaults:
+  ExternalNetworkVlanID: 905
+  # Set to the router gateway on the external network
+  ExternalInterfaceDefaultRoute: 10.0.0.250
+  # Gateway router for the provisioning network (or Undercloud IP)
+  ControlPlaneDefaultRoute: 192.0.2.1
+  # The IP address of the EC2 metadata server. Generally the IP of the Undercloud
+  EC2MetadataIp: 192.0.2.1
+  # Define the DNS servers (maximum 2) for the overcloud nodes
+  DnsServers: ["8.8.8.8","8.8.4.4"]
+  # Set to "br-ex" if using floating IPs on native VLAN on bridge br-ex
+  NeutronExternalNetworkBridge: "''"
+  InternalApiNetworkVlanID: 901
+  StorageNetworkVlanID: 903
+  StorageMgmtNetworkVlanID: 904
+  TenantNetworkVlanID: 902
+
+  StorageNetCidr: 172.18.0.0/24
+  StorageAllocationPools: [{'start': '172.18.0.10', 'end': '172.18.0.200'}]
+
+  SWIFT_PROXY_NAMES: "swift-node1 swift-node2"
+  SWIFT_PROXY_IPS: "172.16.1.101 172.16.1.102" 
