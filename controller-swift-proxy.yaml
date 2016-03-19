@@ -31,19 +31,34 @@ resources:
     properties:
       group: script
       inputs:
+        - name: ACTION
         - name: SWIFT_PROXY_NAMES
         - name: SWIFT_PROXY_IPS
         - name: STORAGE_NET_CIDR
         - name: EXTERNAL_NET_CIDR
       config: {get_file: controller-swift-proxy.sh}
 
-  ControllerSwiftProxyConfigDeployments:
+  ControllerSwiftProxyConfigDeploymentsCreate:
     type: OS::Heat::SoftwareDeployments
     properties:
       servers:  {get_param: servers}
       config: {get_resource: ControllerSwiftProxyConfig}
-      actions: ['CREATE','UPDATE'] # Only do this on CREATE and UPDATE
+      actions: ['CREATE'] # Only do this on CREATE and UPDATE
       input_values:
+        ACTION: 'CREATE'
+        SWIFT_PROXY_NAMES: { get_param: SWIFT_PROXY_NAMES }
+        SWIFT_PROXY_IPS: { get_param: SWIFT_PROXY_IPS }
+        STORAGE_NET_CIDR: {get_param: StorageNetCidr }
+        EXTERNAL_NET_CIDR: { get_param: ExternalNetCidr }
+
+  ControllerSwiftProxyConfigDeploymentsUpdate:
+    type: OS::Heat::SoftwareDeployments
+    properties:
+      servers:  {get_param: servers}
+      config: {get_resource: ControllerSwiftProxyConfig}
+      actions: ['UPDATE'] # Only do this on CREATE and UPDATE
+      input_values:
+        ACTION: 'UPDATE'
         SWIFT_PROXY_NAMES: { get_param: SWIFT_PROXY_NAMES }
         SWIFT_PROXY_IPS: { get_param: SWIFT_PROXY_IPS }
         STORAGE_NET_CIDR: {get_param: StorageNetCidr }
@@ -52,4 +67,8 @@ resources:
 outputs:
   deploy_stdout:
     description: Deployment reference, used to trigger puppet apply on changes
-    value: {get_attr: [ControllerSwiftProxyConfigDeployments, deploy_stdout]}
+    value: 
+      list_join:
+        - ""
+        - - {get_attr: [ControllerSwiftProxyConfigDeploymentsCreate, deploy_stdout]}
+          - {get_attr: [ControllerSwiftProxyConfigDeploymentsUpdate, deploy_stdout]}

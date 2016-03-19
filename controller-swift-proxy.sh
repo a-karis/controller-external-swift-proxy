@@ -7,6 +7,7 @@
 ###########################################################
 
 date +'%F %H:%M:%S' > /tmp/swift-haproxy-runtime.txt
+echo "$ACTION" >> /tmp/swift-haproxy-runtime.txt
 
 # only execute on controllers
 # assumption: if rabbitmq is not running, then this is not a controller node

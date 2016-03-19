@@ -25,5 +25,5 @@ parameter_defaults:
   StorageNetCidr: 172.18.0.0/24
   StorageAllocationPools: [{'start': '172.18.0.10', 'end': '172.18.0.200'}]
 
-  SWIFT_PROXY_NAMES: "swift-node1 swift-node2"
-  SWIFT_PROXY_IPS: "172.16.1.101 172.16.1.102" 
+  SWIFT_PROXY_NAMES: "swift-node1 swift-node2 swift-node3"
+  SWIFT_PROXY_IPS: "172.16.1.101 172.16.1.102 172.16.1.103" 
