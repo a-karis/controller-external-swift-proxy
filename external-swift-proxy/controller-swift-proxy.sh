@@ -10,8 +10,14 @@ date +'%F %H:%M:%S' > /tmp/swift-haproxy-runtime.txt
 echo "$ACTION" >> /tmp/swift-haproxy-runtime.txt
 
 # only execute on controllers
-# assumption: if rabbitmq is not running, then this is not a controller node
-if [ `ps aux | grep [r]abbitmq-server | wc -l` -eq 0 ];then
+# assumption: if rabbitmq is running, then this is a controller node
+# also check hostnames
+if `ps aux | grep -q "[r]abbitmq-server"` || 
+   `hostname | grep -iq "control"` ||
+   `hostname | grep -iq "ctrl"`;then
+  echo "This is a controller" >> /tmp/swift-haproxy-runtime.txt
+else
+  echo "This is not a controller, aborting script" >> /tmp/swift-haproxy-runtime.txt
   exit 0
 fi
 
