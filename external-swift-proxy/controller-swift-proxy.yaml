@@ -1,7 +1,7 @@
 heat_template_version: 2014-10-16
 
 description: >
-  Point haproxy to external swift proxy
+  Point haproxy to external swift proxy ###UUID-6844b71b-5a56-42b1-8974-27136a5fece4
 
 # Note extra parameters can be defined, then passed data via the
 # environment parameter_defaults, without modifying the parent template
