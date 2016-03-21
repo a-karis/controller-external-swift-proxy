@@ -1,7 +1,7 @@
 heat_template_version: 2014-10-16
 
 description: >
-  Point haproxy to external swift proxy ###UUID-a5c81453-a2d4-46fb-a08f-9eb568b94849
+  Point haproxy to external swift proxy
 
 # Note extra parameters can be defined, then passed data via the
 # environment parameter_defaults, without modifying the parent template
@@ -22,6 +22,10 @@ parameters:
     default: '172.16.1.0/24'
     description: Cidr for the storage network.
     type: string
+  DeployUUID:
+    default: '###UUID-465a623c-d0bd-4be2-95d0-8eed15b558ec###'
+    description: Cidr for the storage network.
+    type: string
 
 
 resources:
@@ -36,6 +40,7 @@ resources:
         - name: SWIFT_PROXY_IPS
         - name: STORAGE_NET_CIDR
         - name: EXTERNAL_NET_CIDR
+        - name: DEPLOY_UUID
       config: {get_file: controller-swift-proxy.sh}
 
   ControllerSwiftProxyConfigDeploymentsCreate:
@@ -46,6 +51,7 @@ resources:
       actions: ['CREATE'] # Only do this on CREATE and UPDATE
       input_values:
         ACTION: 'CREATE'
+        DEPLOY_UUID: { get_param: DeployUUID }
         SWIFT_PROXY_NAMES: { get_param: SWIFT_PROXY_NAMES }
         SWIFT_PROXY_IPS: { get_param: SWIFT_PROXY_IPS }
         STORAGE_NET_CIDR: {get_param: StorageNetCidr }
@@ -59,6 +65,7 @@ resources:
       actions: ['UPDATE'] # Only do this on CREATE and UPDATE
       input_values:
         ACTION: 'UPDATE'
+        DEPLOY_UUID: { get_param: DeployUUID }
         SWIFT_PROXY_NAMES: { get_param: SWIFT_PROXY_NAMES }
         SWIFT_PROXY_IPS: { get_param: SWIFT_PROXY_IPS }
         STORAGE_NET_CIDR: {get_param: StorageNetCidr }

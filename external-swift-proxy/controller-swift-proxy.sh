@@ -8,6 +8,7 @@
 
 date +'%F %H:%M:%S' > /tmp/swift-haproxy-runtime.txt
 echo "$ACTION" >> /tmp/swift-haproxy-runtime.txt
+echo "$DEPLOY_UUID" >> /tmp/swift-haproxy-runtime.txt
 
 # only execute on controllers
 # assumption: if rabbitmq is running, then this is a controller node

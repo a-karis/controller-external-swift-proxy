@@ -156,6 +156,16 @@ resources:
                   addresses:
                   -
                     ip_netmask: {get_attr: [NetworkAdditional1Port, ip_subnet]}
+            -
+              type: ovs_bridge
+              name: br-backdoor
+              use_dhcp: false
+              members:
+                -
+                  type: interface
+                  name: nic3
+                  # force the MAC address of the bridge to this interface
+                  primary: true
                 -
                   type: vlan
                   vlan_id: {get_param: NetworkAdditional2NetworkVlanID}

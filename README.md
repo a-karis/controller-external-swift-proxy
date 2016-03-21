@@ -39,7 +39,7 @@ external-swift-proxy/controller-swift-proxy.yaml
 ~~~
 (...)
 description: >
-  Point haproxy to external swift proxy ###UUID-a5c81453-a2d4-46fb-a08f-9eb568b94849
+  Point haproxy to external swift proxy ###UUID-fa3c1f8d-e6c1-4478-a8d6-5e917285b8eb
 (...)
 ~~~
 

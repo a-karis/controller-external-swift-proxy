@@ -41,5 +41,11 @@ parameter_defaults:
 #  AdditionalNetwork1AllocationPools: [{'start': '172.30.0.10', 'end': '172.30.0.200'}]
 #  AdditionalNetwork2AllocationPools: [{'start': '172.31.0.10', 'end': '172.31.0.200'}]
 
-  SWIFT_PROXY_NAMES: "swift-node1 swift-node2 swift-node3"
-  SWIFT_PROXY_IPS: "172.19.0.101 172.19.0.102 172.19.0.103" 
+#  SWIFT_PROXY_NAMES: "swift-node1 swift-node2 swift-node3"
+#  SWIFT_PROXY_IPS: "172.19.0.101 172.19.0.102 172.19.0.103" 
+#
+  ExtraConfig:
+    swift_proxy_node_ips:
+      - "172.19.0.101"
+      - "172.19.0.102"
+      - "172.19.0.103"
